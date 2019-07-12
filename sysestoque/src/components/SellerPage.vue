@@ -3,24 +3,16 @@
     <h3>Vendedor</h3>
     <div class="card">
       <div class="card-header">
-        + vendedor
+        Crie seu vendedor aqui:
       </div>
       <div class="card-body">
         <form class="form-inline" v-on:submit.prevent="onSubmit">
           <div class="form-group">
-            <label>ID</label>
-            <input v-model="productData.product_id" type="text" class="form-control ml-sm-2 mr-sm-4 my-2"  required>
+            <input v-model="productData.product_name" type="text" placeholder="Nome" class="form-control ml-sm-2 mr-sm-4 my-2" required>
           </div>
-          <div class="form-group">
-            <label>Name</label>
-            <input v-model="productData.product_name" type="text" class="form-control ml-sm-2 mr-sm-4 my-2" required>
-          </div>
-          <div class="form-group">
-            <label>Price</label>
-            <input v-model="productData.product_price" type="text" class="form-control ml-sm-2 mr-sm-4 my-2" required>
-          </div>
+          
           <div class="ml-auto text-right">
-            <button type="submit" class="btn btn-primary my-2">Add</button>
+            <button type="submit" class="btn btn-primary my-2">Adicionar</button>
             
           </div>
         </form>
@@ -29,7 +21,7 @@
 
     <div class="card mt-5">
       <div class="card-header">
-        Product List
+        Listinha de vendedores
       </div>
       <div class="card-body">
         <div class="table-responsive">
@@ -37,13 +29,10 @@
             <thead>
               <tr>
                 <th scope="col">
-                  Product ID
+                  ID
                 </th>
                 <th>
-                  Product Name
-                </th>
-                <th>
-                  Product Price
+                  Nome
                 </th>
                 <th>
                   Action

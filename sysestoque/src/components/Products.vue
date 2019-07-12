@@ -8,20 +8,17 @@
       <div class="card-body">
         <form class="form-inline" v-on:submit.prevent="onSubmit">
           <div class="form-group">
-            <label>Nome</label>
-            <input v-model="productData.product_name" type="text" class="form-control ml-sm-2 mr-sm-4 my-2" required>
+            <input v-model="productData.product_name" type="text" placeholder="Nome" class="form-control ml-sm-2 mr-sm-4 my-2" required>
           </div>
           <div class="form-group">
-            <label>Descrição</label>
-            <input v-model="productData.product_description" type="text" class="form-control ml-sm-2 mr-sm-4 my-2"  required>
+            <input v-model="productData.product_description" type="text" placeholder="Descrição" class="form-control ml-sm-2 mr-sm-4 my-2"  required>
           </div>
           <div class="form-group">
-            <label>Preço</label>
-            <input v-model="productData.product_price" type="text" class="form-control ml-sm-2 mr-sm-4 my-2" required>
+            <input v-model="productData.product_price" type="text" placeholder="Preço" class="form-control ml-sm-2 mr-sm-4 my-2" required>
           </div>
           <div class="form-group">
-            <label>Categoria</label>
             <select v-model="productData.product_description_category" class="form-control ml-sm-2 mr-sm-4 my-2">
+              <option value="">Escolha a Categoria</option>
               <option v-for="category in categories" v-bind:value="category.id">
                 {{ category.description }}
               </option>
@@ -99,7 +96,7 @@
                     {{product.category_description}}
                   </td>
                   <td>
-                    {{product.price}}
+                    R${{product.price}}
                   </td>
                   <td>
 
@@ -109,15 +106,15 @@
                     <a href="#" class="icon">
                       <i v-on:click="onEdit(product)" class="fa fa-pencil"></i>
                     </a>
-                    <router-link 
-                    :to="{
-                      name:'ProductPage', 
-                      params:{id: product.id}
-                    }" 
-                    class="icon"
-                    >
-                      <i class="fa fa-eye"></i>
-                    </router-link>
+                    <!-- <router-link 
+                     :to="{
+                       name:'ProductPage', 
+                       params:{id: product.id}
+                     }" 
+                     class="icon"
+                     >
+                       <i class="fa fa-eye"></i>
+                    </router-link> -->
                   </td>
                 </template>
               </tr>
@@ -165,7 +162,7 @@ export default {
     }
   },
   created() {
-    this.getProducts()
+    // this.getProducts()
   },
   mounted() {
     // busca os produtos ao carregar a pagina

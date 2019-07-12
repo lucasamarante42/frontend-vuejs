@@ -3,25 +3,55 @@
     <h3>Cliente</h3>
     <div class="card">
       <div class="card-header">
-        + cliente
+        Crie seu cliente aqui:
       </div>
       <div class="card-body">
         <form class="form-inline" v-on:submit.prevent="onSubmit">
-          <div class="form-group">
-            <label>ID</label>
-            <input v-model="productData.product_id" type="text" class="form-control ml-sm-2 mr-sm-4 my-2"  required>
+
+          <div class="row">
+            <div class="form-group">
+              <input v-model="clientData.client_name" placeholder="Nome" type="text" class="form-control ml-sm-2 mr-sm-4 my-2" required>
+            </div>
+            <div class="form-group">
+              <input v-model="clientData.client_cpf" placeholder="CPF" type="text" v-mask="'###.###.###-##'" class="form-control ml-sm-2 mr-sm-4 my-2" required>
+            </div>
+            <div class="form-group">
+              <input v-model="clientData.client_birthdate" placeholder="Data de Nascimento" onfocus="(this.type='date')" onblur="(this.type='text')" id="date" type="text" class="form-control ml-sm-2 mr-sm-4 my-2"  required>
+            </div>
           </div>
-          <div class="form-group">
-            <label>Name</label>
-            <input v-model="productData.product_name" type="text" class="form-control ml-sm-2 mr-sm-4 my-2" required>
-          </div>
-          <div class="form-group">
-            <label>Price</label>
-            <input v-model="productData.product_price" type="text" class="form-control ml-sm-2 mr-sm-4 my-2" required>
-          </div>
-          <div class="ml-auto text-right">
-            <button type="submit" class="btn btn-primary my-2">Add</button>
+
+
+          <div class="row">
+            <div class="form-group">
+              <input v-model="clientData.client_street" placeholder="Rua" type="text" class="form-control ml-sm-2 mr-sm-4 my-2" required>
+            </div>
+            <div class="form-group">
+              <input v-model="clientData.client_number" placeholder="Número" type="text" class="form-control ml-sm-2 mr-sm-4 my-2" required>
+            </div>
+            <div class="form-group">
+              <input v-model="clientData.client_details" placeholder="Complemento" type="text" class="form-control ml-sm-2 mr-sm-4 my-2"  required>
+            </div>
+
             
+          </div>
+
+          <div class="row">  
+            <div class="form-group">
+              <input v-model="clientData.client_neighborhood" placeholder="Bairro" type="text" class="form-control ml-sm-2 mr-sm-4 my-2"  required>
+            </div>
+            <div class="form-group">
+              <input v-model="clientData.client_city" placeholder="Cidade" type="text" class="form-control ml-sm-2 mr-sm-4 my-2"  required>
+            </div>
+            <div class="form-group">
+              <input v-model="clientData.client_state" placeholder="Estado" type="text" class="form-control ml-sm-2 mr-sm-4 my-2"  required>
+            </div>
+            <div class="form-group">
+              <input v-model="clientData.client_country" placeholder="País" type="text" class="form-control ml-sm-2 mr-sm-4 my-2"  required>
+            </div>
+
+            <div class="ml-auto text-right">
+              <button type="submit" class="btn btn-primary my-2">Adicionar</button> 
+            </div>
           </div>
         </form>
       </div>
@@ -29,7 +59,7 @@
 
     <div class="card mt-5">
       <div class="card-header">
-        Product List
+        Listinha de Clientes
       </div>
       <div class="card-body">
         <div class="table-responsive">
@@ -37,13 +67,13 @@
             <thead>
               <tr>
                 <th scope="col">
-                  Product ID
+                  Nome
                 </th>
                 <th>
-                  Product Name
+                  CPF
                 </th>
                 <th>
-                  Product Price
+                  Data de Nascimento
                 </th>
                 <th>
                   Action
@@ -51,14 +81,14 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="product in sortedProducts" v-bind:key="product.id">
-                <template v-if="editId == product.id">
-                  <td><input v-model="editProductData.product_id" type="text"></td>
-                  <td><input v-model="editProductData.product_name" type="text"></td>
-                  <td><input v-model="editProductData.product_price" type="text"></td>
+              <tr v-for="client in clients" v-bind:key="client.id">
+                <template v-if="editId == client.id">
+                  <td><input v-model="editclientData.client_name" type="text"></td>
+                  <td><input v-model="editclientData.client_cpf" type="text"></td>
+                  <td><input v-model="editclientData.client_birthdate" type="date"></td>
                   <td>
                     <span class="icon">
-                      <i  @click="onEditSubmit(product.id)" class="fa fa-check"></i>
+                      <i  @click="onEditSubmit(client.id)" class="fa fa-check"></i>
                     </span>
                     <span class="icon">
                       <i  @click="onCancel" class="fa fa-ban"></i>
@@ -67,26 +97,26 @@
                 </template>
                 <template v-else>
                   <td>
-                    {{product.product_id}}
+                    {{client.name}}
                   </td>
                   <td>
-                    {{product.product_name}}
+                    {{client.cpf}}
                   </td>
                   <td>
-                    {{product.product_price}}
+                    {{client.birthdate}}
                   </td>
                   <td>
 
                     <a href="#" class="icon">
-                      <i v-on:click="onDelete(product.id)" class="fa fa-trash"></i>
+                      <i v-on:click="onDelete(client.id)" class="fa fa-trash"></i>
                     </a>
                     <a href="#" class="icon">
-                      <i v-on:click="onEdit(product)" class="fa fa-pencil"></i>
+                      <i v-on:click="onEdit(client)" class="fa fa-pencil"></i>
                     </a>
                     <router-link 
                     :to="{
-                      name:'ProductPage', 
-                      params:{id: product.id}
+                      name:'ClientAddressPage', 
+                      params:{id: client.id}
                     }" 
                     class="icon"
                     >
@@ -106,97 +136,100 @@
 </template>
 
 <script>
+import {APIService} from '../APIService';
+
+const API_URL = 'http://127.0.0.1:8000';
+const apiService = new APIService();
+
 export default {
-  name: 'Products',
+  name: 'Clients',
   data () {
     return {
       editId: '',
-      productData: {
+      clientData: {
         'id' : '',
-        'product_id': '',
-        'product_name': '',
-        'product_price': ''
+        'client_birthdate': '',
+        'client_name': '',
+        'client_cpf': ''
       },
-      editProductData: {
+      editclientData: {
         'id' : '',
-        'product_id': '',
-        'product_name': '',
-        'product_price': ''
+        'client_birthdate': '',
+        'client_name': '',
+        'client_cpf': ''
       },
-      products: []
+      clients: []
     }
   },
   created() {
-    this.getProducts()
+
+  },
+  mounted() {
+    // busca os clientes ao carregar a pagina
+    this.getAPIClients();
   },
   computed:{
-    sortedProducts(){
-      return this.products.slice().sort((a,b)=>{
-        return a.product_id - b.product_id
-      })
-    }
   },
   methods: {
-    getProducts() {
-      db.collection('products').get().then(querySnapshot =>{
-        const products = []
-        // querySnapshot.forEach((doc)=>{
-        //   products.push(doc.data())
-        // })
-        const productsArray = []
-        let i = 0
-        querySnapshot.forEach((doc)=>{
-          productsArray.push(doc.data())
-          productsArray[i].id = doc.id
-          products.push(productsArray[i])
-          i++
-        })
-        // for(let key in querySnapshot.docs){
-        //   productsArray.push(querySnapshot.docs[key].data())
-        //   productsArray[key].id = querySnapshot.docs[key].id
-        //   products.push(productsArray[key])
-        // }
-        this.products = products
-      })
-    },
-    onSubmit(){
-      db.collection('products').add(this.productData).then(this.getProducts)
-      this.productData.product_id = ''
-      this.productData.product_name = ''
-      this.productData.product_price = ''
+    // busca todos os clientes
+    getAPIClients(){
+      apiService.getClients().then((data) => {
+        this.clients = data.results;
+    })},
 
+    // deleta o cliente
+    deleteAPIClient(client_id){
+      apiService.deleteClient(client_id)    
     },
-    // onDelete(product_id){
-    //   db.collection('products').where('product_id', '==', product_id).get().then(querySnapshot =>{
-    //     querySnapshot.forEach(doc=>{
-    //       doc.ref.delete().then(this.getProducts)
-    //     })
-    //   })
-    // }
-    onDelete(id){
-      db.collection('products').doc(id).delete().then((data)=> {
-          this.getProducts()
-      })
+  
+    onSubmit(){
+      
+      const data = {
+        'name': this.clientData.client_name,
+        'cpf': this.clientData.client_cpf,
+        'birthdate': this.clientData.client_birthdate
+      }
+
+      apiService.createClient(data)
+
+      this.clientData.client_birthdate = ''
+      this.clientData.client_name = ''
+      this.clientData.client_cpf = ''
+      
+      this.getAPIClients();
     },
-    onEdit(product){
-      this.editId = product.id
-      this.editProductData.product_id = product.product_id
-      this.editProductData.product_name = product.product_name
-      this.editProductData.product_price = product.product_price
+    
+    onDelete(client_id){
+      this.deleteAPIClient(client_id);
+      this.getAPIClients();
+    },
+    onEdit(client){
+      this.editId = client.id
+      this.editclientData.client_birthdate = client.birthdate
+      this.editclientData.client_name = client.name
+      this.editclientData.client_cpf = client.cpf
     },
     onCancel(){
       this.editId = ''
-      this.editProductData.product_id = ''
-      this.editProductData.product_name = ''
-      this.editProductData.product_price = ''
+      this.editclientData.client_birthdate = ''
+      this.editclientData.client_name = ''
+      this.editclientData.client_cpf = ''
     },
     onEditSubmit (id){
-      db.collection("products").doc(id).set(this.editProductData).then(
-        this.getProducts)
-        this.editId = ''
-        this.editProductData.product_id = ''
-        this.editProductData.product_name = ''
-        this.editProductData.product_price = ''
+      const data = {
+        'name': this.editclientData.client_name,
+        'cpf': this.editclientData.client_cpf,
+        'birthdate': this.editclientData.client_birthdate        
+      }
+      
+      apiService.updateClient(id, data)
+      
+      this.editId = ''     
+      this.editclientData.client_name = ''
+      this.editclientData.client_cpf = ''
+      this.editclientData.client_birthdate = ''
+      this.getAPIClients();
+
     }
   }
 }
