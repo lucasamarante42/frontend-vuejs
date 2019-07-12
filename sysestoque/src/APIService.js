@@ -49,12 +49,21 @@ deleteClient(id) {
 
 createClient(client){
     const url = `${API_URL}/api/v1/clients/`
-    return axios.post(url, client);
+    return axios.post(url, client).then(response => response.data)
 }
 
 updateClient(id, client) {
     const url = `${API_URL}/api/v1/clients/${id}`
     return axios.put(url, client).then(response => response)
+}
+
+//client address
+createClientAddress(client_address){
+    
+    const url = `${API_URL}/api/v1/client_addresses/`
+    return axios.post(url, client_address).then(response => response.data).catch(error => console.log(error))
+
+    
 }
 
 

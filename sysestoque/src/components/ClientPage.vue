@@ -23,16 +23,17 @@
 
           <div class="row">
             <div class="form-group">
+              <input v-model="clientData.client_zip" placeholder="CEP" type="text" class="form-control ml-sm-2 mr-sm-4 my-2" required>
+            </div>
+            <div class="form-group">
               <input v-model="clientData.client_street" placeholder="Rua" type="text" class="form-control ml-sm-2 mr-sm-4 my-2" required>
             </div>
             <div class="form-group">
               <input v-model="clientData.client_number" placeholder="Número" type="text" class="form-control ml-sm-2 mr-sm-4 my-2" required>
             </div>
             <div class="form-group">
-              <input v-model="clientData.client_details" placeholder="Complemento" type="text" class="form-control ml-sm-2 mr-sm-4 my-2"  required>
-            </div>
-
-            
+              <input v-model="clientData.client_details" placeholder="Complemento" type="text" class="form-control ml-sm-2 mr-sm-4 my-2"  >
+            </div>            
           </div>
 
           <div class="row">  
@@ -46,8 +47,18 @@
               <input v-model="clientData.client_state" placeholder="Estado" type="text" class="form-control ml-sm-2 mr-sm-4 my-2"  required>
             </div>
             <div class="form-group">
-              <input v-model="clientData.client_country" placeholder="País" type="text" class="form-control ml-sm-2 mr-sm-4 my-2"  required>
+              <input v-model="clientData.client_country" placeholder="País" type="text" class="form-control ml-sm-2 mr-sm-4 my-2" >
             </div>
+          </div>
+
+          <div class="row">  
+            <div class="form-group">
+              <input v-model="clientData.client_telephone" placeholder="Telefone" type="text" v-mask="'(##)####-####'" class="form-control ml-sm-2 mr-sm-4 my-2"  required>
+            </div>
+            <div class="form-group">
+              <input v-model="clientData.client_cellphone" placeholder="Celular" type="text" v-mask="'(##)#####-####'" class="form-control ml-sm-2 mr-sm-4 my-2"  required>
+            </div>
+            
 
             <div class="ml-auto text-right">
               <button type="submit" class="btn btn-primary my-2">Adicionar</button> 
@@ -179,7 +190,9 @@ export default {
 
     // deleta o cliente
     deleteAPIClient(client_id){
-      apiService.deleteClient(client_id)    
+      apiService.deleteClient(client_id).then((data) => {
+        this.getAPIClients();
+      })   
     },
   
     onSubmit(){
@@ -190,18 +203,49 @@ export default {
         'birthdate': this.clientData.client_birthdate
       }
 
-      apiService.createClient(data)
+      // criando cliente
+      apiService.createClient(data).then((data) => {
+        const client_id = data.id;
 
-      this.clientData.client_birthdate = ''
-      this.clientData.client_name = ''
-      this.clientData.client_cpf = ''
-      
-      this.getAPIClients();
+        const data_address = {
+          'zip_address': this.clientData.client_zip, 
+        	'cellphone': this.clientData.client_cellphone,
+          'telephone': this.clientData.client_telephone,
+          'street': this.clientData.client_street,
+          'details': this.clientData.client_details,
+          'number': this.clientData.client_number,
+          'neighborhood': this.clientData.client_neighborhood,
+          'city': this.clientData.client_city,
+          'state': this.clientData.client_state,
+          'country': this.clientData.client_country,
+          'client': client_id,
+        }
+        
+        //criando endereço do cliente
+        apiService.createClientAddress(data_address)
+        
+        this.clientData.client_birthdate = ''
+        this.clientData.client_name = ''
+        this.clientData.client_cpf = ''
+        this.clientData.client_cellphone = ''
+        this.clientData.client_telephone = ''
+        this.clientData.client_zip = ''
+        this.clientData.client_street = ''
+        this.clientData.client_details = ''
+        this.clientData.client_number = ''
+        this.clientData.client_neighborhood = ''
+        this.clientData.client_city = ''
+        this.clientData.client_state = ''
+        this.clientData.client_country = ''
+
+        this.getAPIClients();
+
+      })
+
     },
     
     onDelete(client_id){
       this.deleteAPIClient(client_id);
-      this.getAPIClients();
     },
     onEdit(client){
       this.editId = client.id
@@ -222,14 +266,13 @@ export default {
         'birthdate': this.editclientData.client_birthdate        
       }
       
-      apiService.updateClient(id, data)
-      
-      this.editId = ''     
-      this.editclientData.client_name = ''
-      this.editclientData.client_cpf = ''
-      this.editclientData.client_birthdate = ''
-      this.getAPIClients();
-
+      apiService.updateClient(id, data).then((data) =>{
+        this.editId = ''     
+        this.editclientData.client_name = ''
+        this.editclientData.client_cpf = ''
+        this.editclientData.client_birthdate = ''
+        this.getAPIClients();
+      }) 
     }
   }
 }

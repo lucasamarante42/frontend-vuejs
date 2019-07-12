@@ -189,7 +189,9 @@ export default {
 
     // deleta o produto
     deleteAPIProduct(product_id){
-      apiService.deleteProduct(product_id)    
+      apiService.deleteProduct(product_id).then((data) => {
+        this.getAPIProducts();
+      })
     },
 
     // criacao de produto
@@ -201,18 +203,17 @@ export default {
         'category': this.productData.product_description_category
       }
       
-      apiService.createProduct(data)
-            
-      this.productData.product_description = ''
-      this.productData.product_name = ''
-      this.productData.product_price = ''
-      this.productData.product_description_category = ''
-      this.getAPIProducts();
+      apiService.createProduct(data).then((data) => {
+        this.productData.product_description = ''
+        this.productData.product_name = ''
+        this.productData.product_price = ''
+        this.productData.product_description_category = ''
+        this.getAPIProducts();
+      })
+                  
     },
     onDelete(product_id){
-      this.deleteAPIProduct(product_id);
-      this.getAPIProducts();
-  
+      this.deleteAPIProduct(product_id);  
     },
     
     onEdit(product){
@@ -240,15 +241,14 @@ export default {
         'category': this.editProductData.product_description_category
       }
       
-      apiService.updateProduct(id, data)
-      
-
-      this.editId = ''      
-      this.editProductData.product_description = ''
-      this.editProductData.product_name = ''
-      this.editProductData.product_price = ''
-      this.editProductData.product_description_category = ''
-      this.getAPIProducts();
+      apiService.updateProduct(id, data).then((data) => {
+        this.editId = ''      
+        this.editProductData.product_description = ''
+        this.editProductData.product_name = ''
+        this.editProductData.product_price = ''
+        this.editProductData.product_description_category = ''
+        this.getAPIProducts();
+      })      
     }
   }
 }
