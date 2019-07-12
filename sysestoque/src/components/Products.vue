@@ -1,0 +1,273 @@
+<template>
+  <div class="products">
+    <h3>Produtos</h3>
+    <div class="card">
+      <div class="card-header">
+        Crie seu produto aqui:
+      </div>
+      <div class="card-body">
+        <form class="form-inline" v-on:submit.prevent="onSubmit">
+          <div class="form-group">
+            <label>Nome</label>
+            <input v-model="productData.product_name" type="text" class="form-control ml-sm-2 mr-sm-4 my-2" required>
+          </div>
+          <div class="form-group">
+            <label>Descrição</label>
+            <input v-model="productData.product_description" type="text" class="form-control ml-sm-2 mr-sm-4 my-2"  required>
+          </div>
+          <div class="form-group">
+            <label>Preço</label>
+            <input v-model="productData.product_price" type="text" class="form-control ml-sm-2 mr-sm-4 my-2" required>
+          </div>
+          <div class="form-group">
+            <label>Categoria</label>
+            <select v-model="productData.product_description_category" class="form-control ml-sm-2 mr-sm-4 my-2">
+              <option v-for="category in categories" v-bind:value="category.id">
+                {{ category.description }}
+              </option>
+            </select>
+          </div>
+          <div class="ml-auto text-right">
+            <button type="submit" class="btn btn-primary my-2">Adicionar</button>            
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="card mt-5">
+      <div class="card-header">
+        Listinha de Produtos
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">
+                  ID
+                </th>
+                <th>
+                  Nome
+                </th>
+                <th>
+                  Descrição
+                </th>
+                <th>
+                  Categoria
+                </th>
+                <th>
+                  Preço
+                </th>
+                <th>
+                  Ação
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="product in prodsApi" v-bind:key="product.id">
+                <template v-if="editId == product.id">
+                  <td>{{ editId }}</td>
+                  <td><input v-model="editProductData.product_name" type="text"></td>
+                  <td><input v-model="editProductData.product_description" type="text"></td>
+                  <td> <select v-model="editProductData.product_description_category">
+                        <option v-for="category in categories" v-bind:value="category.id">
+                          {{ category.description }}
+                        </option>
+                      </select>
+                  </td>
+                  <td><input v-model="editProductData.product_price" type="text"></td>
+                  <td>
+                    <span class="icon">
+                      <i  @click="onEditSubmit(product.id)" class="fa fa-check"></i>
+                    </span>
+                    <span class="icon">
+                      <i  @click="onCancel" class="fa fa-ban"></i>
+                    </span>
+                  </td>
+                </template>
+                <template v-else>
+                  <td>
+                    {{product.id}}
+                  </td>
+                  <td>
+                    {{product.name}}
+                  </td>
+                  <td>
+                    {{product.description}}
+                  </td>
+                  <td>
+                    {{product.category_description}}
+                  </td>
+                  <td>
+                    {{product.price}}
+                  </td>
+                  <td>
+
+                    <a href="#" class="icon">
+                      <i v-on:click="onDelete(product.id)" class="fa fa-trash"></i>
+                    </a>
+                    <a href="#" class="icon">
+                      <i v-on:click="onEdit(product)" class="fa fa-pencil"></i>
+                    </a>
+                    <router-link 
+                    :to="{
+                      name:'ProductPage', 
+                      params:{id: product.id}
+                    }" 
+                    class="icon"
+                    >
+                      <i class="fa fa-eye"></i>
+                    </router-link>
+                  </td>
+                </template>
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</template>
+
+<script>
+import {APIService} from '../APIService';
+
+const API_URL = 'http://127.0.0.1:8000';
+const apiService = new APIService();
+
+export default {
+  name: 'Products',
+  data () {
+    return {
+      editId: '',
+      productData: {
+        'id' : '',
+        'product_id': '',
+        'product_name': '',
+        'product_price': '',
+        'product_description': '',
+        'product_description_category': ''
+
+      },
+      editProductData: {
+        'id' : '',
+        'product_id': '',
+        'product_name': '',
+        'product_price': '',
+        'product_description': '',
+        'product_description_category': ''
+      },
+      products: [],
+      prodsApi: [],
+      categories: []
+    }
+  },
+  created() {
+    this.getProducts()
+  },
+  mounted() {
+    // busca os produtos ao carregar a pagina
+    this.getAPIProducts();
+
+    //busca as categorias e inputa no select field
+    this.getAPICategories();
+  },
+  computed:{
+    
+  },
+  methods: {
+    // busca todos os produtos
+    getAPIProducts(){
+      apiService.getProducts().then((data) => {
+        this.prodsApi = data.results;
+    })},
+
+    // busca todas as categorias
+    getAPICategories(){
+      apiService.getCategories().then((data) => {
+        this.categories = data.results;
+    })},
+
+    // deleta o produto
+    deleteAPIProduct(product_id){
+      apiService.deleteProduct(product_id)    
+    },
+
+    // criacao de produto
+    onSubmit(){      
+      const data = {
+        'name': this.productData.product_name,
+        'description': this.productData.product_description,
+        'price': this.productData.product_price,
+        'category': this.productData.product_description_category
+      }
+      
+      apiService.createProduct(data)
+            
+      this.productData.product_description = ''
+      this.productData.product_name = ''
+      this.productData.product_price = ''
+      this.productData.product_description_category = ''
+      this.getAPIProducts();
+    },
+    onDelete(product_id){
+      this.deleteAPIProduct(product_id);
+      this.getAPIProducts();
+  
+    },
+    
+    onEdit(product){
+      this.editId = product.id
+      this.editProductData.product_id = product.id
+      this.editProductData.product_name = product.name
+      this.editProductData.product_price = product.price
+      this.editProductData.product_description = product.description
+      this.editProductData.product_description_category = product.product_description_category
+    },
+    onCancel(){
+      this.editId = ''
+      this.editProductData.product_id = ''
+      this.editProductData.product_name = ''
+      this.editProductData.product_price = ''
+      this.editProductData.product_description = ''
+      this.editProductData.product_description_category = ''
+
+    },
+    onEditSubmit (id){
+      const data = {
+        'name': this.editProductData.product_name,
+        'description': this.editProductData.product_description,
+        'price': this.editProductData.product_price,
+        'category': this.editProductData.product_description_category
+      }
+      
+      apiService.updateProduct(id, data)
+      
+
+      this.editId = ''      
+      this.editProductData.product_description = ''
+      this.editProductData.product_name = ''
+      this.editProductData.product_price = ''
+      this.editProductData.product_description_category = ''
+      this.getAPIProducts();
+    }
+  }
+}
+</script>
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style scoped>
+h3{
+  text-align: center;
+  margin-top: 30px;
+  margin-bottom: 20px;
+}
+.icon{
+  margin-right: 10px;
+}
+.icon i{
+  cursor: pointer;
+}
+</style>
