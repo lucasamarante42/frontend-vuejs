@@ -8,7 +8,7 @@
       <div class="card-body">
         <form class="form-inline" v-on:submit.prevent="onSubmit">
           <div class="form-group">
-            <input v-model="productData.product_name" type="text" placeholder="Nome" class="form-control ml-sm-2 mr-sm-4 my-2" required>
+            <input v-model="sellerData.seller_name" type="text" placeholder="Nome" class="form-control ml-sm-2 mr-sm-4 my-2" required>
           </div>
           
           <div class="ml-auto text-right">
@@ -35,19 +35,18 @@
                   Nome
                 </th>
                 <th>
-                  Action
+                  Ação
                 </th>
               </tr>
             </thead>
             <tbody>
-              <tr v-for="product in sortedProducts" v-bind:key="product.id">
-                <template v-if="editId == product.id">
-                  <td><input v-model="editProductData.product_id" type="text"></td>
-                  <td><input v-model="editProductData.product_name" type="text"></td>
-                  <td><input v-model="editProductData.product_price" type="text"></td>
+              <tr v-for="seller in sellers" v-bind:key="seller.id">
+                <template v-if="editId == seller.id">
+                  <td><input v-model="editSellerData.seller_id" type="text"></td>
+                  <td><input v-model="editSellerData.seller_name" type="text"></td>
                   <td>
                     <span class="icon">
-                      <i  @click="onEditSubmit(product.id)" class="fa fa-check"></i>
+                      <i  @click="onEditSubmit(seller.id)" class="fa fa-check"></i>
                     </span>
                     <span class="icon">
                       <i  @click="onCancel" class="fa fa-ban"></i>
@@ -56,31 +55,19 @@
                 </template>
                 <template v-else>
                   <td>
-                    {{product.product_id}}
+                    {{seller.id}}
                   </td>
                   <td>
-                    {{product.product_name}}
+                    {{seller.name}}
                   </td>
                   <td>
-                    {{product.product_price}}
-                  </td>
-                  <td>
-
                     <a href="#" class="icon">
-                      <i v-on:click="onDelete(product.id)" class="fa fa-trash"></i>
+                      <i v-on:click="onDelete(seller.id)" class="fa fa-trash"></i>
                     </a>
                     <a href="#" class="icon">
-                      <i v-on:click="onEdit(product)" class="fa fa-pencil"></i>
+                      <i v-on:click="onEdit(seller)" class="fa fa-pencil"></i>
                     </a>
-                    <router-link 
-                    :to="{
-                      name:'ProductPage', 
-                      params:{id: product.id}
-                    }" 
-                    class="icon"
-                    >
-                      <i class="fa fa-eye"></i>
-                    </router-link>
+                    
                   </td>
                 </template>
               </tr>
@@ -95,97 +82,90 @@
 </template>
 
 <script>
+import {APIService} from '../APIService';
+
+const API_URL = 'http://127.0.0.1:8000';
+const apiService = new APIService();
 export default {
-  name: 'Products',
+  name: 'Sellers',
   data () {
     return {
       editId: '',
-      productData: {
+      sellerData: {
         'id' : '',
-        'product_id': '',
-        'product_name': '',
-        'product_price': ''
+        'seller_id': '',
+        'seller_name': ''
       },
-      editProductData: {
+      editSellerData: {
         'id' : '',
-        'product_id': '',
-        'product_name': '',
-        'product_price': ''
+        'seller_id': '',
+        'seller_name': ''
       },
-      products: []
+      sellers: []
     }
   },
-  created() {
-    this.getProducts()
+  mounted() {
+    //busca os vendedores 
+    this.getAPISellers();
+  },
+  created() {   
   },
   computed:{
-    sortedProducts(){
-      return this.products.slice().sort((a,b)=>{
-        return a.product_id - b.product_id
-      })
-    }
   },
   methods: {
-    getProducts() {
-      db.collection('products').get().then(querySnapshot =>{
-        const products = []
-        // querySnapshot.forEach((doc)=>{
-        //   products.push(doc.data())
-        // })
-        const productsArray = []
-        let i = 0
-        querySnapshot.forEach((doc)=>{
-          productsArray.push(doc.data())
-          productsArray[i].id = doc.id
-          products.push(productsArray[i])
-          i++
+    // busca todos os vendedores
+    getAPISellers(){
+        apiService.getSellers().then((data) => {
+        this.sellers = data.results;
         })
-        // for(let key in querySnapshot.docs){
-        //   productsArray.push(querySnapshot.docs[key].data())
-        //   productsArray[key].id = querySnapshot.docs[key].id
-        //   products.push(productsArray[key])
-        // }
-        this.products = products
-      })
-    },
+      },
+
+    // deleta o vendedor
+    deleteAPISeller(seller_id){
+      apiService.deleteSeller(seller_id).then((data) => {
+        this.$notify.success('Seu dado foi deletado com sucesso!');
+        this.getAPISellers();
+      }).catch(e => this.$notify.error('Não foi possível deletar!'))  
+    },  
+    
     onSubmit(){
-      db.collection('products').add(this.productData).then(this.getProducts)
-      this.productData.product_id = ''
-      this.productData.product_name = ''
-      this.productData.product_price = ''
+      const data = {
+        'name': this.sellerData.seller_name
+      }
+      
+      apiService.createSeller(data).then((data) => {
+        this.$notify.success('Seus dados foram salvos com sucesso!');
+        this.sellerData.seller_name = ''
+        
+        this.getAPISellers();
+      }).catch(e => this.$notify.error('Não foi possível salvar!'))  
 
     },
-    // onDelete(product_id){
-    //   db.collection('products').where('product_id', '==', product_id).get().then(querySnapshot =>{
-    //     querySnapshot.forEach(doc=>{
-    //       doc.ref.delete().then(this.getProducts)
-    //     })
-    //   })
-    // }
-    onDelete(id){
-      db.collection('products').doc(id).delete().then((data)=> {
-          this.getProducts()
-      })
+   
+    onDelete(seller_id){
+      this.deleteAPISeller(seller_id);  
     },
-    onEdit(product){
-      this.editId = product.id
-      this.editProductData.product_id = product.product_id
-      this.editProductData.product_name = product.product_name
-      this.editProductData.product_price = product.product_price
+    onEdit(seller){
+      this.editId = seller.id
+      this.editSellerData.seller_id = seller.id
+      this.editSellerData.seller_name = seller.name
     },
     onCancel(){
       this.editId = ''
-      this.editProductData.product_id = ''
-      this.editProductData.product_name = ''
-      this.editProductData.product_price = ''
+      this.editSellerData.seller_id = ''
+      this.editSellerData.seller_name = ''
     },
     onEditSubmit (id){
-      db.collection("products").doc(id).set(this.editProductData).then(
-        this.getProducts)
-        this.editId = ''
-        this.editProductData.product_id = ''
-        this.editProductData.product_name = ''
-        this.editProductData.product_price = ''
+      const data = {
+        'name': this.editSellerData.seller_name
+      }
+      
+      apiService.updateSeller(id, data).then((data) => {
+        this.$notify.success('Seu dado foi atualizado com sucesso!');
+        this.editId = ''      
+        this.editSellerData.seller_name = ''
+        this.getAPISellers();
+      }).catch(e => this.$notify.error('Não foi possível atualizar!'))        
     }
   }
 }

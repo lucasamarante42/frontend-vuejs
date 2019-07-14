@@ -11,12 +11,12 @@
 		    <ul class="navbar-nav">
 		      <li class="nav-item active">
 						<router-link :to="{ name:'Products'}" >
-		        	<a class="nav-link" href="#">Produtos</a>
+		        	<a class="nav-link" href="#">Produto</a>
 						</router-link>
 		      </li>
 					<li class="nav-item active">
 						<router-link :to="{ name:'CategoriesPage'}" >
-		        	<a class="nav-link" href="#">Categorias</a>
+		        	<a class="nav-link" href="#">Categoria</a>
 						</router-link>
 		      </li>
 		      <li class="nav-item">

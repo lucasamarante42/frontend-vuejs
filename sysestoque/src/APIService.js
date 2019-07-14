@@ -73,13 +73,30 @@ updateClient(id, client) {
 }
 
 //client address
-createClientAddress(client_address){
-    
+createClientAddress(client_address){    
     const url = `${API_URL}/api/v1/client_addresses/`
     return axios.post(url, client_address).then(response => response.data).catch(error => console.log(error))
-
-    
 }
 
+//sellers
+getSellers() {
+    const url = `${API_URL}/api/v1/sellers`
+    return axios.get(url).then(response => response.data)
+}
+
+createSeller(seller){
+    const url = `${API_URL}/api/v1/sellers/`
+    return axios.post(url, seller);
+}
+
+deleteSeller(id) {
+    const url = `${API_URL}/api/v1/sellers/${id}`
+    return axios.delete(url).then(response => response)
+}
+
+updateSeller(id, seller) {
+    const url = `${API_URL}/api/v1/sellers/${id}`
+    return axios.put(url, seller).then(response => response)
+}
 
 }

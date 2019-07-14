@@ -88,7 +88,7 @@ import {APIService} from '../APIService';
 const API_URL = 'http://127.0.0.1:8000';
 const apiService = new APIService();
 export default {
-  name: 'Products',
+  name: 'Categories',
   data () {
     return {
       editId: '',
@@ -117,14 +117,9 @@ export default {
   methods: {
     // busca todas as categorias
     getAPICategories(){
-      try {
         apiService.getCategories().then((data) => {
         this.categories = data.results;
-        })
-
-      } catch(error){
-          console.log(error)
-        }  
+        })  
       },
 
     // deleta a categoria
