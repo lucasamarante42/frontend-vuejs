@@ -36,6 +36,21 @@ getCategories() {
     return axios.get(url).then(response => response.data)
 }
 
+createCategory(category){
+    const url = `${API_URL}/api/v1/categories/`
+    return axios.post(url, category);
+}
+
+deleteCategory(id) {
+    const url = `${API_URL}/api/v1/categories/${id}`
+    return axios.delete(url).then(response => response)
+}
+
+updateCategory(id, category) {
+    const url = `${API_URL}/api/v1/categories/${id}`
+    return axios.put(url, category).then(response => response)
+}
+
 //clients
 getClients(){
     const url = `${API_URL}/api/v1/clients`

@@ -6,6 +6,7 @@ import SellerPage from '@/components/SellerPage'
 import WelcomePage from '@/components/WelcomePage'
 import ClientPage from '@/components/ClientPage'
 import ClientAddressPage from '@/components/ClientAddressPage'
+import CategoriesPage from '@/components/CategoriesPage'
 
 Vue.use(Router)
 
@@ -40,6 +41,11 @@ export default new Router({
       path: '/client-address',
       name: 'ClientAddressPage',
       component: ClientAddressPage
+    },
+    {
+      path: '/categories',
+      name: 'CategoriesPage',
+      component: CategoriesPage
     }
   ]
 })

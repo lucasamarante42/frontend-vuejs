@@ -2,7 +2,7 @@
 <div class="header">
   <nav class="navbar navbar-light bg-light navbar-expand-lg">
     <div class="container">
-			<router-link class="navbar-brand" :to="{name:'WelcomePage'}">SYSESTOQUE</router-link>
+			<router-link class="navbar-brand" :to="{name:'WelcomePage'}">SYSESTOQUE </router-link>
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
 		    <span class="navbar-toggler-icon"></span>
 		  </button>
@@ -11,7 +11,12 @@
 		    <ul class="navbar-nav">
 		      <li class="nav-item active">
 						<router-link :to="{ name:'Products'}" >
-		        	<a class="nav-link" href="#">Produtos <span class="sr-only">(current)</span></a>
+		        	<a class="nav-link" href="#">Produtos</a>
+						</router-link>
+		      </li>
+					<li class="nav-item active">
+						<router-link :to="{ name:'CategoriesPage'}" >
+		        	<a class="nav-link" href="#">Categorias</a>
 						</router-link>
 		      </li>
 		      <li class="nav-item">

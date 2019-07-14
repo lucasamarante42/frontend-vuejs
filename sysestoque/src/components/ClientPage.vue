@@ -87,7 +87,7 @@
                   Data de Nascimento
                 </th>
                 <th>
-                  Action
+                  Ação
                 </th>
               </tr>
             </thead>
