@@ -78,6 +78,11 @@ createClientAddress(client_address){
     return axios.post(url, client_address).then(response => response.data).catch(error => console.log(error))
 }
 
+getClientAddressByID(id) {
+    const url = `${API_URL}/api/v1/client_addresses/${id}`
+    return axios.get(url).then(response => response)
+}
+
 //sellers
 getSellers() {
     const url = `${API_URL}/api/v1/sellers`
