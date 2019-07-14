@@ -70,7 +70,7 @@
 
     <div class="card mt-5">
       <div class="card-header">
-        Listinha de Clientes
+        Lista de Clientes
       </div>
       <div class="card-body">
         <div class="table-responsive">

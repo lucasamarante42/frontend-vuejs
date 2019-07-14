@@ -14,10 +14,10 @@
             <input v-model="productData.product_description" type="text" placeholder="Descrição" class="form-control ml-sm-2 mr-sm-4 my-2"  required>
           </div>
           <div class="form-group">
-            <input v-model="productData.product_total_quantity" type="number" placeholder="Quantidade" class="form-control ml-sm-2 mr-sm-4 my-2"  required>
+            <input v-model="productData.product_total_quantity" type="number" placeholder="Quant." class="form-control ml-sm-2 mr-sm-4 my-2 size_field"  required>
           </div>
           <div class="form-group">
-            <input v-model="productData.product_price" v-money="money" placeholder="Preço" class="form-control ml-sm-2 mr-sm-4 my-2" required>
+            <input v-model="productData.product_price" v-money="money" placeholder="Preço" class="form-control ml-sm-2 mr-sm-4 my-2 size_field" required>
           </div>
           <div class="form-group">
             <select v-model="productData.product_description_category" class="form-control ml-sm-2 mr-sm-4 my-2">
@@ -36,7 +36,7 @@
 
     <div class="card mt-5">
       <div class="card-header">
-        Listinha de Produtos
+        Lista de Produtos
       </div>
       <div class="card-body">
         <div class="table-responsive">
@@ -295,5 +295,9 @@ h3{
 }
 .icon i{
   cursor: pointer;
+}
+
+.size_field{
+    width: 100px;
 }
 </style>

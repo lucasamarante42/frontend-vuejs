@@ -21,7 +21,7 @@
 
     <div class="card mt-5">
       <div class="card-header">
-        Listinha de categorias
+        Lista de categorias
       </div>
       <div class="card-body">
         <div class="table-responsive">

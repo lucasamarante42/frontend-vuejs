@@ -29,6 +29,11 @@
 		        	<a class="nav-link" href="#">Cliente</a>
 						</router-link>
 		      </li>
+					<li class="nav-item">
+						<router-link :to="{ name:'OrderPage'}" >
+		        	<a class="nav-link" href="#">Pedido</a>
+						</router-link>
+		      </li>
 		    </ul>
 		  </div>
 	</div>
