@@ -14,7 +14,10 @@
             <input v-model="productData.product_description" type="text" placeholder="Descrição" class="form-control ml-sm-2 mr-sm-4 my-2"  required>
           </div>
           <div class="form-group">
-            <input v-model="productData.product_price" type="text" placeholder="Preço" class="form-control ml-sm-2 mr-sm-4 my-2" required>
+            <input v-model="productData.product_total_quantity" type="number" placeholder="Quantidade" class="form-control ml-sm-2 mr-sm-4 my-2"  required>
+          </div>
+          <div class="form-group">
+            <input v-model="productData.product_price" v-money="money" placeholder="Preço" class="form-control ml-sm-2 mr-sm-4 my-2" required>
           </div>
           <div class="form-group">
             <select v-model="productData.product_description_category" class="form-control ml-sm-2 mr-sm-4 my-2">
@@ -53,6 +56,9 @@
                   Categoria
                 </th>
                 <th>
+                  Quantidade
+                </th>
+                <th>
                   Preço
                 </th>
                 <th>
@@ -72,6 +78,7 @@
                         </option>
                       </select>
                   </td>
+                  <td><input v-model="editProductData.product_total_quantity" type="number"></td>
                   <td><input v-model="editProductData.product_price" type="text"></td>
                   <td>
                     <span class="icon">
@@ -94,6 +101,9 @@
                   </td>
                   <td>
                     {{product.category_description}}
+                  </td>
+                  <td>
+                     {{product.total_quantity}}
                   </td>
                   <td>
                     R${{product.price}}
@@ -145,7 +155,8 @@ export default {
         'product_name': '',
         'product_price': '',
         'product_description': '',
-        'product_description_category': ''
+        'product_description_category': '',
+        'product_total_quantity': ''
 
       },
       editProductData: {
@@ -154,11 +165,19 @@ export default {
         'product_name': '',
         'product_price': '',
         'product_description': '',
-        'product_description_category': ''
+        'product_description_category': '',
+        'product_total_quantity': ''
       },
       products: [],
       prodsApi: [],
-      categories: []
+      categories: [],
+      money: {
+        decimal: '.',
+        thousands: '',
+        prefix: 'R$ ',
+        precision: 2,
+        masked: false /* doesn't work with directive */
+      }
     }
   },
   created() {
@@ -200,7 +219,8 @@ export default {
       const data = {
         'name': this.productData.product_name,
         'description': this.productData.product_description,
-        'price': this.productData.product_price,
+        'price': this.productData.product_price.replace('R$',''),
+        'total_quantity': this.productData.product_total_quantity,
         'category': this.productData.product_description_category
       }
       
@@ -209,6 +229,7 @@ export default {
         this.productData.product_description = ''
         this.productData.product_name = ''
         this.productData.product_price = ''
+        this.productData.product_total_quantity = ''
         this.productData.product_description_category = ''
         this.getAPIProducts();
       }).catch(e => this.$notify.error('Não foi possível salvar!'))  
@@ -225,6 +246,7 @@ export default {
       this.editProductData.product_price = product.price
       this.editProductData.product_description = product.description
       this.editProductData.product_description_category = product.product_description_category
+      this.editProductData.product_total_quantity = product.total_quantity
     },
     onCancel(){
       this.editId = ''
@@ -233,6 +255,7 @@ export default {
       this.editProductData.product_price = ''
       this.editProductData.product_description = ''
       this.editProductData.product_description_category = ''
+      this.editProductData.product_total_quantity = ''
 
     },
     onEditSubmit (id){
@@ -241,6 +264,7 @@ export default {
         'name': this.editProductData.product_name,
         'description': this.editProductData.product_description,
         'price': this.editProductData.product_price,
+        'total_quantity': this.editProductData.product_total_quantity,
         'category': this.editProductData.product_description_category
       }
       
@@ -251,6 +275,7 @@ export default {
         this.editProductData.product_name = ''
         this.editProductData.product_price = ''
         this.editProductData.product_description_category = ''
+        this.editProductData.product_total_quantity = ''
         this.getAPIProducts();
       }).catch(e => this.$notify.error('Não foi possível atualizar!'))      
     }
