@@ -191,8 +191,9 @@ export default {
     // deleta o cliente
     deleteAPIClient(client_id){
       apiService.deleteClient(client_id).then((data) => {
+        this.$notify.success('Seu dado foi deletado com sucesso!');
         this.getAPIClients();
-      })   
+      }).catch(e => this.$notify.error('Não foi possível deletar!'))     
     },
   
     onSubmit(){
@@ -222,26 +223,25 @@ export default {
         }
         
         //criando endereço do cliente
-        apiService.createClientAddress(data_address)
-        
-        this.clientData.client_birthdate = ''
-        this.clientData.client_name = ''
-        this.clientData.client_cpf = ''
-        this.clientData.client_cellphone = ''
-        this.clientData.client_telephone = ''
-        this.clientData.client_zip = ''
-        this.clientData.client_street = ''
-        this.clientData.client_details = ''
-        this.clientData.client_number = ''
-        this.clientData.client_neighborhood = ''
-        this.clientData.client_city = ''
-        this.clientData.client_state = ''
-        this.clientData.client_country = ''
+        apiService.createClientAddress(data_address).then((data) => {
+          this.$notify.success('Seus dados foram salvos com sucesso!');
+          this.clientData.client_birthdate = ''
+          this.clientData.client_name = ''
+          this.clientData.client_cpf = ''
+          this.clientData.client_cellphone = ''
+          this.clientData.client_telephone = ''
+          this.clientData.client_zip = ''
+          this.clientData.client_street = ''
+          this.clientData.client_details = ''
+          this.clientData.client_number = ''
+          this.clientData.client_neighborhood = ''
+          this.clientData.client_city = ''
+          this.clientData.client_state = ''
+          this.clientData.client_country = ''
 
-        this.getAPIClients();
-
-      })
-
+          this.getAPIClients();
+        }).catch(e => this.$notify.error('Não foi possível salvar!'))
+      }).catch(e => this.$notify.error('Não foi possível salvar!'))
     },
     
     onDelete(client_id){
@@ -267,12 +267,13 @@ export default {
       }
       
       apiService.updateClient(id, data).then((data) =>{
+        this.$notify.success('Seu dado foi atualizado com sucesso!');
         this.editId = ''     
         this.editclientData.client_name = ''
         this.editclientData.client_cpf = ''
         this.editclientData.client_birthdate = ''
         this.getAPIClients();
-      }) 
+      }).catch(e => this.$notify.error('Não foi possível atualizar!'))    
     }
   }
 }

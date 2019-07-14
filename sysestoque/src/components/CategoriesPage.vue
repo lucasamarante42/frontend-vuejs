@@ -130,8 +130,9 @@ export default {
     // deleta a categoria
     deleteAPICategory(category_id){
       apiService.deleteCategory(category_id).then((data) => {
+        this.$notify.success('Seu dado foi deletado com sucesso!');
         this.getAPICategories();
-      })
+      }).catch(e => this.$notify.error('Não foi possível deletar!'))  
     },  
     
     onSubmit(){
@@ -140,10 +141,11 @@ export default {
       }
       
       apiService.createCategory(data).then((data) => {
+        this.$notify.success('Seus dados foram salvos com sucesso!');
         this.categoryData.category_description = ''
         
         this.getAPICategories();
-      })
+      }).catch(e => this.$notify.error('Não foi possível salvar!'))  
 
     },
    
@@ -166,10 +168,11 @@ export default {
       }
       
       apiService.updateCategory(id, data).then((data) => {
+        this.$notify.success('Seu dado foi atualizado com sucesso!');
         this.editId = ''      
         this.editCategoryData.category_description = ''
         this.getAPICategories();
-      })     
+      }).catch(e => this.$notify.error('Não foi possível atualizar!'))        
     }
   }
 }
