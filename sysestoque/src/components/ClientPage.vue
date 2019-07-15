@@ -1,67 +1,65 @@
 <template>
-  <div class="seller">
-    <h3>Cliente</h3>
-    <div class="card">
-      <div class="card-header">
-        Crie seu cliente aqui:
+  <div class="client">
+    
+    <div class="card mb-3 mg-top">
+      <div class="card-header text-white bg-dark">
+        Cadastro de clientes
       </div>
       <div class="card-body">
-        <form class="form-inline" v-on:submit.prevent="onSubmit">
+        <form  v-on:submit.prevent="onSubmit">
 
           <div class="row">
             <div class="form-group">
-              <input v-model="clientData.client_name" placeholder="Nome" type="text" class="form-control ml-sm-2 mr-sm-4 my-2" required>
+              <input v-model="clientData.client_name" placeholder="Nome" type="text" class="form-control ml-sm-2 mr-sm-4 my-2 size-field-r0" required>
             </div>
             <div class="form-group">
-              <input v-model="clientData.client_cpf" placeholder="CPF" type="text" v-mask="'###.###.###-##'" class="form-control ml-sm-2 mr-sm-4 my-2" required>
+              <input v-model="clientData.client_cpf" placeholder="CPF" type="text" v-mask="'###.###.###-##'" class="form-control ml-sm-2 mr-sm-4 my-2 size-field-r1" required>
             </div>
             <div class="form-group">
-              <input v-model="clientData.client_birthdate" placeholder="Data de Nascimento" onfocus="(this.type='date')" onblur="(this.type='text')" id="date" type="text" class="form-control ml-sm-2 mr-sm-4 my-2"  required>
+              <input v-model="clientData.client_birthdate" placeholder="Data de Nascimento" onfocus="(this.type='date')" onblur="(this.type='text')" id="date" type="text" class="form-control ml-sm-2 mr-sm-4 my-2 size-field-r1"  required>
             </div>
           </div>
 
 
           <div class="row">
             <div class="form-group">
-              <input v-model="clientData.client_zip" placeholder="CEP" type="text" class="form-control ml-sm-2 mr-sm-4 my-2" required>
+              <input v-model="clientData.client_zip" placeholder="CEP" @input="searchZip(clientData.client_zip)" type="text" class="form-control ml-sm-2 mr-sm-4 my-2 size-field-r1" required>
             </div>
             <div class="form-group">
-              <input v-model="clientData.client_street" placeholder="Rua" type="text" class="form-control ml-sm-2 mr-sm-4 my-2" required>
+              <input v-model="clientData.client_street" placeholder="Rua" type="text" class="form-control ml-sm-2 mr-sm-4 my-2 size-field-r0" required>
             </div>
             <div class="form-group">
-              <input v-model="clientData.client_number" placeholder="Número" type="text" class="form-control ml-sm-2 mr-sm-4 my-2" required>
+              <input v-model="clientData.client_number" placeholder="Número" type="text" class="form-control ml-sm-2 mr-sm-4 my-2 size-field-r1" required>
             </div>
-            <div class="form-group">
-              <input v-model="clientData.client_details" placeholder="Complemento" type="text" class="form-control ml-sm-2 mr-sm-4 my-2"  >
+          </div>
+
+          <div class="row">  
+          <div class="form-group">
+              <input v-model="clientData.client_details" placeholder="Complemento" type="text" class="form-control ml-sm-2 mr-sm-4 my-2 size-field-r1">
             </div>            
+            <div class="form-group">
+              <input v-model="clientData.client_neighborhood" placeholder="Bairro" type="text" class="form-control ml-sm-2 mr-sm-4 my-2 size-field-r2"  required>
+            </div>
+            <div class="form-group">
+              <input v-model="clientData.client_city" placeholder="Cidade" type="text" class="form-control ml-sm-2 mr-sm-4 my-2 size-field-r2"  required>
+            </div>
+            <div class="form-group">
+              <input v-model="clientData.client_state" placeholder="Estado" type="text" class="form-control ml-sm-2 mr-sm-4 my-2 size-field-r1"  required>
+            </div>
+           
           </div>
 
           <div class="row">  
             <div class="form-group">
-              <input v-model="clientData.client_neighborhood" placeholder="Bairro" type="text" class="form-control ml-sm-2 mr-sm-4 my-2"  required>
+              <input v-model="clientData.client_telephone" placeholder="Telefone" type="text" v-mask="'(##)####-####'" class="form-control ml-sm-2 mr-sm-4 my-2 size-field-r1"  required>
             </div>
             <div class="form-group">
-              <input v-model="clientData.client_city" placeholder="Cidade" type="text" class="form-control ml-sm-2 mr-sm-4 my-2"  required>
-            </div>
-            <div class="form-group">
-              <input v-model="clientData.client_state" placeholder="Estado" type="text" class="form-control ml-sm-2 mr-sm-4 my-2"  required>
-            </div>
-            <div class="form-group">
-              <input v-model="clientData.client_country" placeholder="País" type="text" class="form-control ml-sm-2 mr-sm-4 my-2" >
-            </div>
-          </div>
-
-          <div class="row">  
-            <div class="form-group">
-              <input v-model="clientData.client_telephone" placeholder="Telefone" type="text" v-mask="'(##)####-####'" class="form-control ml-sm-2 mr-sm-4 my-2"  required>
-            </div>
-            <div class="form-group">
-              <input v-model="clientData.client_cellphone" placeholder="Celular" type="text" v-mask="'(##)#####-####'" class="form-control ml-sm-2 mr-sm-4 my-2"  required>
+              <input v-model="clientData.client_cellphone" placeholder="Celular" type="text" v-mask="'(##)#####-####'" class="form-control ml-sm-2 mr-sm-4 my-2 size-field-r1"  required>
             </div>
             
 
             <div class="ml-auto text-right">
-              <button type="submit" class="btn btn-primary my-2">Adicionar</button> 
+              <button type="submit" class="btn btn-success my-2 mg-btn-add">Adicionar</button> 
             </div>
           </div>
         </form>
@@ -69,7 +67,7 @@
     </div>
 
     <div class="card mt-5">
-      <div class="card-header">
+      <div class="card-header text-white bg-dark">
         Lista de Clientes
       </div>
       <div class="card-body">
@@ -161,13 +159,22 @@ export default {
         'id' : '',
         'client_birthdate': '',
         'client_name': '',
-        'client_cpf': ''
+        'client_cpf': '',
+        'client_street': '',
+        'client_neighborhood': '',
+        'client_city': '',
+        'client_state': ''
+
       },
       editclientData: {
         'id' : '',
         'client_birthdate': '',
         'client_name': '',
-        'client_cpf': ''
+        'client_cpf': '',
+        'client_street': '',
+        'client_neighborhood': '',
+        'client_city': '',
+        'client_state': ''
       },
       clients: []
     }
@@ -182,6 +189,21 @@ export default {
   computed:{
   },
   methods: {
+
+    async searchZip(zip) {
+      if (!zip || zip.length < 8) return
+
+      await apiService.getZipAddress(zip).then((data) => {
+        
+        this.clientData.client_street = data.data.endereco
+        this.clientData.client_neighborhood = data.data.bairro
+        this.clientData.client_city = data.data.cidade
+        this.clientData.client_state = data.data.uf        
+
+      }).catch(e => this.$notify.error('Não foi possível consultar cep!'))
+      
+    },
+
     // busca todos os clientes
     getAPIClients(){
       apiService.getClients().then((data) => {
@@ -218,7 +240,7 @@ export default {
           'neighborhood': this.clientData.client_neighborhood,
           'city': this.clientData.client_city,
           'state': this.clientData.client_state,
-          'country': this.clientData.client_country,
+          'country': 'Brasil', //this.clientData.client_country,
           'client': client_id,
         }
         
@@ -237,7 +259,7 @@ export default {
           this.clientData.client_neighborhood = ''
           this.clientData.client_city = ''
           this.clientData.client_state = ''
-          this.clientData.client_country = ''
+          // this.clientData.client_country = ''
 
           this.getAPIClients();
         }).catch(e => this.$notify.error('Não foi possível salvar!'))
@@ -281,15 +303,20 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h3{
-  text-align: center;
-  margin-top: 30px;
-  margin-bottom: 20px;
+.size-field-r0{
+  width: 500px;
 }
-.icon{
-  margin-right: 10px;
+
+.size-field-r1{
+  width: 250px;
 }
-.icon i{
-  cursor: pointer;
+
+.size-field-r2{
+  width: 232px;
 }
+
+.mg-btn-add{
+  margin-right: 28px;
+}
+
 </style>

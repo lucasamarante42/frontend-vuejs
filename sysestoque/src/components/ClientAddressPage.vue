@@ -1,9 +1,8 @@
 <template>
-  <div class="single-product">
+  <div class="address-client">
   	<div>
-	   	<h3>Endereço do cliente</h3>
-	   	<div class="card">
-	      <div class="card-header">
+	   	<div class="card mb-3 mg-top">
+	      <div class="card-header text-white bg-dark">
 	        Detalhes
 	      </div>
 	      <div class="card-body">

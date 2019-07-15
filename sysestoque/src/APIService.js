@@ -129,4 +129,9 @@ updateOrder(id, order){
     return axios.put(url, order).then(response => response)
 }
 
+getZipAddress(zip) {
+    const url = `https://webmaniabr.com/api/1/cep/${zip}?app_key=NnxhXtzLOLmrI3dgjgOxgTUa3RzTIbaB&app_secret=vBW64VhvLeenNbxnGLNIG8uQmVBT2tptaCXd0br9iHasX8ky`
+    return axios.get(url).then(response => response)
+}
+
 }

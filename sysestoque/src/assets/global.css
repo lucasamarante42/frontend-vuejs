@@ -63,3 +63,7 @@ table, td, th, tr {
 .hg-table{
     height: 300px;
 }
+
+.size-field-name{
+    width: 150px;
+}

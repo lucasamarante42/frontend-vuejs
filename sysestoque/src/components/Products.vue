@@ -14,10 +14,10 @@
             <input v-model="productData.product_description" type="text" placeholder="Descrição" class="form-control ml-sm-2 mr-sm-4 my-2"  required>
           </div>
           <div class="form-group">
-            <input v-model="productData.product_total_quantity" type="number" placeholder="Quant." class="form-control ml-sm-2 mr-sm-4 my-2 size_field"  required>
+            <input v-model="productData.product_total_quantity" type="number" placeholder="Quant." class="form-control ml-sm-2 mr-sm-4 my-2 size-field"  required>
           </div>
           <div class="form-group">
-            <input v-model="productData.product_price" v-money="money" placeholder="Preço" class="form-control ml-sm-2 mr-sm-4 my-2 size_field" required>
+            <input v-model="productData.product_price" v-money="money" placeholder="Preço" class="form-control ml-sm-2 mr-sm-4 my-2 size-field" required>
           </div>
           <div class="form-group">
             <select v-model="productData.product_description_category" class="form-control ml-sm-2 mr-sm-4 my-2">
@@ -285,19 +285,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h3{
-  text-align: center;
-  margin-top: 30px;
-  margin-bottom: 20px;
-}
-.icon{
-  margin-right: 10px;
-}
-.icon i{
-  cursor: pointer;
-}
-
-.size_field{
+.size-field{
     width: 100px;
 }
 </style>

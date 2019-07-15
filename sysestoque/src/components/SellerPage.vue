@@ -8,7 +8,7 @@
       <div class="card-body">
         <form class="form-inline" v-on:submit.prevent="onSubmit">
           <div class="form-group">
-            <input v-model="sellerData.seller_name" type="text" placeholder="Nome" class="form-control ml-sm-2 mr-sm-4 my-2" required>
+            <input v-model="sellerData.seller_name" type="text" placeholder="Nome" class="form-control ml-sm-2 mr-sm-4 my-2 size-field-name" required>
           </div>
           
           <div class="ml-auto text-right">
@@ -173,15 +173,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h3{
-  text-align: center;
-  margin-top: 30px;
-  margin-bottom: 20px;
-}
-.icon{
-  margin-right: 10px;
-}
-.icon i{
-  cursor: pointer;
+.size-field-name{
+    width: 450px;
 }
 </style>
