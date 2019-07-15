@@ -1,9 +1,9 @@
 <template>
   <div class="products">
-    <h3>Produtos</h3>
-    <div class="card">
+    
+    <div class="card text-white bg-dark mb-3 mg-top">
       <div class="card-header">
-        Crie seu produto aqui:
+        Cadastro de produtos
       </div>
       <div class="card-body">
         <form class="form-inline" v-on:submit.prevent="onSubmit">
@@ -28,18 +28,18 @@
             </select>
           </div>
           <div class="ml-auto text-right">
-            <button type="submit" class="btn btn-primary my-2">Adicionar</button>            
+            <button type="submit" class="btn btn-success my-2">Adicionar</button>            
           </div>
         </form>
       </div>
     </div>
 
-    <div class="card mt-5">
+    <div class="card mt-5 text-white bg-list-tb">
       <div class="card-header">
         Lista de Produtos
       </div>
       <div class="card-body">
-        <div class="table-responsive">
+        <div class="table-responsive hg-table">
           <table class="table">
             <thead>
               <tr>

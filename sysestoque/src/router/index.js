@@ -14,7 +14,7 @@ Vue.use(Router)
 export default new Router({
   routes: [
     {
-      path: '/',
+      path: '/product',
       name: 'Products',
       component: Products
     },
@@ -29,7 +29,7 @@ export default new Router({
       component: SellerPage
     },
     {
-      path: '/welcome',
+      path: '/',
       name: 'WelcomePage',
       component: WelcomePage
     },

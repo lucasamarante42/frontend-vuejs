@@ -1,6 +1,6 @@
 <template>
 <div class="header">
-  <nav class="navbar navbar-light bg-light navbar-expand-lg">
+  <nav class="navbar navbar-dark bg-dark">
     <div class="container">
 			<router-link class="navbar-brand" :to="{name:'WelcomePage'}">SYSESTOQUE </router-link>
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -9,12 +9,12 @@
 
 			<div class="collapse navbar-collapse" id="navbarNav">
 		    <ul class="navbar-nav">
-		      <li class="nav-item active">
+		      <li class="nav-item">
 						<router-link :to="{ name:'Products'}" >
 		        	<a class="nav-link" href="#">Produto</a>
 						</router-link>
 		      </li>
-					<li class="nav-item active">
+					<li class="nav-item">
 						<router-link :to="{ name:'CategoriesPage'}" >
 		        	<a class="nav-link" href="#">Categoria</a>
 						</router-link>
@@ -38,7 +38,10 @@
 		  </div>
 	</div>
 </nav>
+
+
 </div>
+
 </template>
 
 <script>
@@ -53,18 +56,5 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h1, h2 {
-  font-weight: normal;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
+
 </style>

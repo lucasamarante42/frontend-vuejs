@@ -1,0 +1,65 @@
+h1, h2 {
+    font-weight: normal;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    display: inline-block;
+    margin: 0 10px;
+}
+
+a {
+    color: #0a0a0a;
+}
+
+h3{
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+.icon{
+    margin-right: 10px;
+}
+
+.icon i{
+    cursor: pointer;
+}
+
+.btn-main{
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+
+.bt-icon{
+    margin: 15px;
+}
+
+.fixar-rodape{
+    bottom: 0;
+    left: 0;
+    height: 40px;
+    position: fixed;
+    width: 100%;
+}
+
+.mg-top {
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+
+.bg-list-tb{
+   background-color: rgba(58, 53, 32, 0.5);
+   
+}
+
+table, td, th, tr {
+    text-align: center;
+}
+
+.hg-table{
+    height: 300px;
+}

@@ -7,7 +7,17 @@ import VueMask from 'v-mask'
 import Notify from 'vue2-notify'
 import money from 'v-money'
 
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faCoffee } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+
+library.add(faCoffee)
+
+Vue.component('font-awesome-icon', FontAwesomeIcon)
+
 Vue.config.productionTip = false
+
+import "@/assets/global.css"
 
 Vue.use(VueMask)
 Vue.use(Notify)
