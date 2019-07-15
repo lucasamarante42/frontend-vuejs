@@ -1,9 +1,9 @@
 <template>
-  <div class="seller">
-    <h3>Categorias</h3>
-    <div class="card">
-      <div class="card-header">
-        Crie sua categoria aqui:
+  <div class="categories">
+    
+    <div class="card mb-3 mg-top">
+      <div class="card-header text-white bg-dark">
+        Cadastro de categorias
       </div>
       <div class="card-body">
         <form class="form-inline" v-on:submit.prevent="onSubmit">
@@ -12,7 +12,7 @@
           </div>
           
           <div class="ml-auto text-right">
-            <button type="submit" class="btn btn-primary my-2">Adicionar</button>
+            <button type="submit" class="btn btn-success my-2">Adicionar</button>
             
           </div>
         </form>
@@ -20,18 +20,18 @@
     </div>
 
     <div class="card mt-5">
-      <div class="card-header">
+      <div class="card-header text-white bg-dark">
         Lista de categorias
       </div>
       <div class="card-body">
-        <div class="table-responsive">
+        <div class="table-responsive hg-table">
           <table class="table">
             <thead>
               <tr>
-                <th scope="col">
+                <th scope="col" width="50">
                   ID
                 </th>
-                <th>
+                <th width="850">
                   Descrição
                 </th>
                 <th>
@@ -62,9 +62,9 @@
                   </td>
                   
                   <td>
-                    <a href="#" class="icon">
+                    <!-- <a href="#" class="icon">
                       <i v-on:click="onDelete(category.id)" class="fa fa-trash"></i>
-                    </a>
+                    </a> -->
                     <a href="#" class="icon">
                       <i v-on:click="onEdit(category)" class="fa fa-pencil"></i>
                     </a>

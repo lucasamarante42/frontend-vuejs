@@ -1,9 +1,9 @@
 <template>
   <div class="seller">
-    <h3>Vendedor</h3>
-    <div class="card">
-      <div class="card-header">
-        Crie seu vendedor aqui:
+  
+    <div class="card  mb-3 mg-top">
+      <div class="card-header text-white bg-dark">
+        Cadastro de vendedores
       </div>
       <div class="card-body">
         <form class="form-inline" v-on:submit.prevent="onSubmit">
@@ -12,7 +12,7 @@
           </div>
           
           <div class="ml-auto text-right">
-            <button type="submit" class="btn btn-primary my-2">Adicionar</button>
+            <button type="submit" class="btn btn-success my-2">Adicionar</button>
             
           </div>
         </form>
@@ -20,7 +20,7 @@
     </div>
 
     <div class="card mt-5">
-      <div class="card-header">
+      <div class="card-header text-white bg-dark">
         Lista de vendedores
       </div>
       <div class="card-body">
@@ -28,10 +28,10 @@
           <table class="table">
             <thead>
               <tr>
-                <th scope="col">
+                <th scope="col" width="50">
                   ID
                 </th>
-                <th>
+                <th width="850">
                   Nome
                 </th>
                 <th>

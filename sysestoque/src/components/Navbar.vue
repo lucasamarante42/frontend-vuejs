@@ -1,6 +1,6 @@
 <template>
 <div class="header">
-  <nav class="navbar navbar-dark bg-dark">
+  <nav class="navbar navbar-dark bg-dark navbar-expand-lg">
     <div class="container">
 			<router-link class="navbar-brand" :to="{name:'WelcomePage'}">SYSESTOQUE </router-link>
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
