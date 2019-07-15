@@ -1,8 +1,8 @@
 <template>
   <div class="products">
     
-    <div class="card text-white bg-dark mb-3 mg-top">
-      <div class="card-header">
+    <div class="card  mb-3 mg-top">
+      <div class="card-header text-white bg-dark">
         Cadastro de produtos
       </div>
       <div class="card-body">
@@ -34,8 +34,8 @@
       </div>
     </div>
 
-    <div class="card mt-5 text-white bg-list-tb">
-      <div class="card-header">
+    <div class="card mt-5">
+      <div class="card-header text-white bg-dark">
         Lista de Produtos
       </div>
       <div class="card-body">
