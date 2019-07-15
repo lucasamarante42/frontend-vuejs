@@ -112,7 +112,7 @@
                 <template v-if="editId == order.id">
                   <td>{{ editId }}</td>
                   <td>
-                    <select v-model="editOrderData.order_client" class="form-control ml-sm-2 mr-sm-4 my-2">
+                    <select v-model="editOrderData.order_client">
                       <option value="">Escolha o cliente</option>
                       <option v-for="client in clients" v-bind:value="client.id">
                         {{ client.name }}
@@ -121,7 +121,7 @@
                   </td>
 
                   <td>
-                     <select v-model="editOrderData.order_seller" class="form-control ml-sm-2 mr-sm-4 my-2">
+                     <select v-model="editOrderData.order_seller">
                       <option value="">Escolha o vendedor</option>
                       <option v-for="seller in sellers" v-bind:value="seller.id">
                         {{ seller.name }}
@@ -359,46 +359,47 @@ export default {
       this.deleteAPIOrder(order_id);  
     },
     
-    // onEdit(product){
-    //   this.editId = product.id
-    //   this.editProductData.product_id = product.id
-    //   this.editProductData.product_name = product.name
-    //   this.editProductData.product_price = product.price
-    //   this.editProductData.product_description = product.description
-    //   this.editProductData.product_description_category = product.product_description_category
-    //   this.editProductData.product_total_quantity = product.total_quantity
-    // },
-    // onCancel(){
-    //   this.editId = ''
-    //   this.editProductData.product_id = ''
-    //   this.editProductData.product_name = ''
-    //   this.editProductData.product_price = ''
-    //   this.editProductData.product_description = ''
-    //   this.editProductData.product_description_category = ''
-    //   this.editProductData.product_total_quantity = ''
+    onEdit(order){
+      this.editId = order.id
+      this.editOrderData.order_id = order.id
+      this.editOrderData.order_client = order.client_name
+      this.editOrderData.order_seller = order.seller_name
+      this.editOrderData.order_total_quantity = order.total_quantity
+      this.editOrderData.order_price = order.value_total
+      this.editOrderData.order_date = order.date_order
+    },
+    onCancel(){
+      this.editId = ''
+      this.editOrderData.order_id = ''
+      this.editOrderData.order_client = ''
+      this.editOrderData.order_seller = ''
+      this.editOrderData.order_total_quantity = ''
+      this.editOrderData.order_price = ''
+      this.editOrderData.order_date = ''
 
-    // },
-    // onEditSubmit (id){
+    },
+    onEditSubmit (id){
     
-    //     const data = {
-    //     'name': this.editProductData.product_name,
-    //     'description': this.editProductData.product_description,
-    //     'price': this.editProductData.product_price,
-    //     'total_quantity': this.editProductData.product_total_quantity,
-    //     'category': this.editProductData.product_description_category
-    //   }
-      
-    //   apiService.updateProduct(id, data).then((data) => {
-    //     this.$notify.success('Seu dado foi atualizado com sucesso!')
-    //     this.editId = ''      
-    //     this.editProductData.product_description = ''
-    //     this.editProductData.product_name = ''
-    //     this.editProductData.product_price = ''
-    //     this.editProductData.product_description_category = ''
-    //     this.editProductData.product_total_quantity = ''
-    //     this.getAPIProducts();
-    //   }).catch(e => this.$notify.error('Não foi possível atualizar!'))      
-    // }
+        const data = {
+          'client': this.editOrderData.order_client,
+          'seller': this.editOrderData.order_seller,
+          'total_quantity': this.editOrderData.order_total_quantity,
+          'value_total':  this.editOrderData.order_price.replace('R$',''),
+          'date_order': this.editOrderData.order_date
+        }
+      console.log(data)
+      console.log(id)  
+      apiService.updateOrder(id, data).then((data) => {
+        this.$notify.success('Seu dado foi atualizado com sucesso!')
+        this.editId = ''      
+        this.editOrderData.order_client = ''
+        this.editOrderData.order_seller = ''
+        this.editOrderData.order_total_quantity = ''
+        this.editOrderData.order_price = ''
+        this.editOrderData.order_date = ''
+        this.getAPIOrders();
+      }).catch(e => this.$notify.error('Não foi possível atualizar!'))      
+    }
   }
 }
 </script>
