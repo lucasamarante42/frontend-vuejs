@@ -104,4 +104,19 @@ updateSeller(id, seller) {
     return axios.put(url, seller).then(response => response)
 }
 
+getOrders() {
+    const url = `${API_URL}/api/v1/orders`
+    return axios.get(url).then(response => response.data)
+}
+
+createOrder(order){
+    const url = `${API_URL}/api/v1/orders/`
+    return axios.post(url, order);
+}
+
+createItenOrder(iten_order){
+    const url = `${API_URL}/api/v1/orders_itens/`
+    return axios.post(url, iten_order);
+}
+
 }

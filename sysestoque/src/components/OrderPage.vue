@@ -48,7 +48,7 @@
           <tr v-for="(row, index) in rows">
 
               <td>
-                <select v-model="row.order_product" class="form-control ml-sm-2 mr-sm-4 my-2">
+                <select v-model="row.order_product" class="form-control ml-sm-2 mr-sm-4 my-2 size_field_row">
                   <option value="">Escolha o produto</option>
                   <option v-for="product in products" v-bind:value="product.id">
                     {{ product.name }}
@@ -56,9 +56,9 @@
                 </select>
               </td>
             
-              <td><input v-model="row.order_total_quantity" type="number" placeholder="Quant." class="form-control ml-sm-2 mr-sm-4 my-2 size_field" ></td>
+              <td><input v-model="row.order_total_quantity" type="number" placeholder="Quant." class="form-control ml-sm-2 mr-sm-4 my-2" ></td>
               <td>
-                  <a v-on:click="removeElement(index);" style="cursor: pointer">Remove</a>
+                  <a v-on:click="removeElement(index);" class="btn-remove">Remove</a>
               </td>
           </tr>
         </tbody>
@@ -109,21 +109,41 @@
             </thead>
             <tbody>
               <tr v-for="order in orders" v-bind:key="order.id">
-                <template v-if="editId == product.id">
+                <template v-if="editId == order.id">
                   <td>{{ editId }}</td>
-                  <td><input v-model="editProductData.product_name" type="text"></td>
-                  <td><input v-model="editProductData.product_description" type="text"></td>
-                  <td> <select v-model="editProductData.product_description_category">
-                        <option v-for="category in categories" v-bind:value="category.id">
-                          {{ category.description }}
-                        </option>
-                      </select>
+                  <td>
+                    <select v-model="editOrderData.order_client" class="form-control ml-sm-2 mr-sm-4 my-2">
+                      <option value="">Escolha o cliente</option>
+                      <option v-for="client in clients" v-bind:value="client.id">
+                        {{ client.name }}
+                      </option>
+                    </select>
                   </td>
-                  <td><input v-model="editProductData.product_total_quantity" type="number"></td>
-                  <td><input v-model="editProductData.product_price" type="text"></td>
+
+                  <td>
+                     <select v-model="editOrderData.order_seller" class="form-control ml-sm-2 mr-sm-4 my-2">
+                      <option value="">Escolha o vendedor</option>
+                      <option v-for="seller in sellers" v-bind:value="seller.id">
+                        {{ seller.name }}
+                      </option>
+                    </select>
+                  </td>
+
+                  <td>
+                    <input v-model="editOrderData.order_total_quantity" type="number" placeholder="Quant. Total">
+                  </td>
+
+                  <td>
+                    <input v-model="editOrderData.order_price" v-money="money" placeholder="Preço">
+                  </td>
+               
+                  <td>
+                    <input v-model="editOrderData.order_date" placeholder="Data" onfocus="(this.type='date')" onblur="(this.type='text')" id="date" type="text">
+                  </td>
+
                   <td>
                     <span class="icon">
-                      <i  @click="onEditSubmit(product.id)" class="fa fa-check"></i>
+                      <i  @click="onEditSubmit(order.id)" class="fa fa-check"></i>
                     </span>
                     <span class="icon">
                       <i  @click="onCancel" class="fa fa-ban"></i>
@@ -132,40 +152,40 @@
                 </template>
                 <template v-else>
                   <td>
-                    {{product.id}}
+                    {{order.id}}
                   </td>
                   <td>
-                    {{product.name}}
+                    {{order.client_name}}
                   </td>
                   <td>
-                    {{product.description}}
+                    {{order.seller_name}}
                   </td>
                   <td>
-                    {{product.category_description}}
+                    {{order.total_quantity}}
                   </td>
                   <td>
-                     {{product.total_quantity}}
+                     R${{order.value_total}}
                   </td>
                   <td>
-                    R${{product.price}}
+                    {{order.date_order}}
                   </td>
                   <td>
 
                     <a href="#" class="icon">
-                      <i v-on:click="onDelete(product.id)" class="fa fa-trash"></i>
+                      <i v-on:click="onDelete(order.id)" class="fa fa-trash"></i>
                     </a>
                     <a href="#" class="icon">
-                      <i v-on:click="onEdit(product)" class="fa fa-pencil"></i>
+                      <i v-on:click="onEdit(order)" class="fa fa-pencil"></i>
                     </a>
-                    <!-- <router-link 
+                    <router-link 
                      :to="{
-                       name:'ProductPage', 
-                       params:{id: product.id}
+                       name:'OrderItensPage', 
+                       params:{id: order.id}
                      }" 
                      class="icon"
                      >
                        <i class="fa fa-eye"></i>
-                    </router-link> -->
+                    </router-link>
                   </td>
                 </template>
               </tr>
@@ -235,6 +255,9 @@ export default {
     // busca os produtos ao carregar a pagina
     this.getAPIProducts();
 
+    // busca os pedidos
+    this.getAPIOrders();
+
   },
   computed:{
     
@@ -261,10 +284,10 @@ export default {
 
     // busca todos os vendedores
     getAPISellers(){
-        apiService.getSellers().then((data) => {
-        this.sellers = data.results;
-        })
-      },
+      apiService.getSellers().then((data) => {
+      this.sellers = data.results;
+      })
+    },
 
     // busca todos os produtos
     getAPIProducts(){
@@ -272,11 +295,11 @@ export default {
         this.products = data.results;
     })},
 
-    // busca todas as categorias
-    getAPICategories(){
-      apiService.getCategories().then((data) => {
-        this.categories = data.results;
-    })},
+    getAPIOrders(){
+      apiService.getOrders().then((data) => {
+        this.orders = data.results;
+      })
+    },
 
     // deleta o produto
     // deleteAPIProduct(product_id){
@@ -286,25 +309,53 @@ export default {
     //   }).catch(e => this.$notify.error('Não foi possível deletar!'))  
     // },
 
-    // criacao de produto
-    // onSubmit(){      
-    //   const data = {
-    //     'name': this.productData.product_name,
-    //     'description': this.productData.product_description,
-    //     'price': this.productData.product_price.replace('R$',''),
-    //     'total_quantity': this.productData.product_total_quantity,
-    //     'category': this.productData.product_description_category
-    //   }
+    // criacao de pedido
+    onSubmit(){      
+      const data = {
+        'client': this.orderData.order_client,
+        'seller': this.orderData.order_seller,
+        'total_quantity': this.orderData.order_total_quantity,
+        'value_total':  this.orderData.order_price.replace('R$',''),
+        'date_order': this.orderData.order_date
+      }
+
+        apiService.createOrder(data).then((data) => {
+          const order_id = data.data.id;
+          const order_date = data.data.date_order;
+
+          if (this.rows.length > 0){
+            for (let index = 0; index < this.rows.length; index++) {
+
+              const iten_order_data = {
+                'order': order_id,
+                'product': this.rows[index].order_product,
+                'quantity': this.rows[index].order_total_quantity,
+                'date_order_iten': order_date
+              }
+
+              apiService.createItenOrder(iten_order_data).then((data) => {
+                console.log('Item salvo com sucesso')
+              }).catch(e => this.$notify.error('Não foi possível salvar!')) 
+
+            }
+          }
+
+          this.$notify.success('Seus dados foram salvos com sucesso!')
+
+          this.orderData.order_client = ''
+          this.orderData.order_seller = ''
+          this.orderData.order_total_quantity = ''
+          this.orderData.order_price = ''
+          this.orderData.order_date = ''
+
+          this.rows=[]
+
+          this.getAPIOrders();
+        }).catch(e => this.$notify.error('Não foi possível salvar!')) 
+
+    }
       
-    //   apiService.createProduct(data).then((data) => {
-    //     this.$notify.success('Seus dados foram salvos com sucesso!')
-    //     this.productData.product_description = ''
-    //     this.productData.product_name = ''
-    //     this.productData.product_price = ''
-    //     this.productData.product_total_quantity = ''
-    //     this.productData.product_description_category = ''
-    //     this.getAPIProducts();
-    //   }).catch(e => this.$notify.error('Não foi possível salvar!'))  
+     
                   
     // },
     // onDelete(product_id){
@@ -373,9 +424,18 @@ h3{
     width: 100px;
 }
 
-a {
-  background-color: orange;
+.size_field_row{
+    width: 450px;
+}
 
+td {
+  width: 30px;
+}
+
+.btn-remove{
+  cursor: pointer;
+  padding: 4px;
+  background-color: orange;
 }
 
 </style>
