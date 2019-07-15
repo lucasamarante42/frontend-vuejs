@@ -301,13 +301,13 @@ export default {
       })
     },
 
-    // deleta o produto
-    // deleteAPIProduct(product_id){
-    //   apiService.deleteProduct(product_id).then((data) => {
-    //     this.$notify.success('Seu dado foi deletado com sucesso!')
-    //     this.getAPIProducts();
-    //   }).catch(e => this.$notify.error('Não foi possível deletar!'))  
-    // },
+    // deleta o pedido
+    deleteAPIOrder(order_id){
+      apiService.deleteOrder(order_id).then((data) => {
+        this.$notify.success('Seu dado foi deletado com sucesso!')
+        this.getAPIOrders();
+      }).catch(e => this.$notify.error('Não foi possível deletar!'))  
+    },
 
     // criacao de pedido
     onSubmit(){      
@@ -353,14 +353,11 @@ export default {
           this.getAPIOrders();
         }).catch(e => this.$notify.error('Não foi possível salvar!')) 
 
-    }
+    },
       
-     
-                  
-    // },
-    // onDelete(product_id){
-    //   this.deleteAPIProduct(product_id);  
-    // },
+    onDelete(order_id){
+      this.deleteAPIOrder(order_id);  
+    },
     
     // onEdit(product){
     //   this.editId = product.id

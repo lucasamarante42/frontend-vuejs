@@ -119,4 +119,9 @@ createItenOrder(iten_order){
     return axios.post(url, iten_order);
 }
 
+deleteOrder(id) {
+    const url = `${API_URL}/api/v1/orders/${id}`
+    return axios.delete(url).then(response => response)
+}
+
 }
