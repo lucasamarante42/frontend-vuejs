@@ -134,4 +134,9 @@ getZipAddress(zip) {
     return axios.get(url).then(response => response)
 }
 
+getAPIOrderItenByOrderID(id) {
+    const url = `${API_URL}/api/v1/orders_itens_by_order/${id}`
+    return axios.get(url).then(response => response.data)
+}
+
 }

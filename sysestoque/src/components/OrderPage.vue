@@ -178,7 +178,7 @@
                     </a>
                     <router-link 
                      :to="{
-                       name:'OrderItensPage', 
+                       name:'OrderItenPage', 
                        params:{id: order.id}
                      }" 
                      class="icon"

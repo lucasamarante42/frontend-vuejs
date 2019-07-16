@@ -8,6 +8,7 @@ import ClientPage from '@/components/ClientPage'
 import ClientAddressPage from '@/components/ClientAddressPage'
 import CategoriesPage from '@/components/CategoriesPage'
 import OrderPage from '@/components/OrderPage'
+import OrderItenPage from '@/components/OrderItenPage'
 
 Vue.use(Router)
 
@@ -52,6 +53,12 @@ export default new Router({
       path: '/order',
       name: 'OrderPage',
       component: OrderPage
+    },
+    {
+      path: '/order-iten',
+      name: 'OrderItenPage',
+      component: OrderItenPage
     }
+
   ]
 })
