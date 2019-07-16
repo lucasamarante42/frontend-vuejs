@@ -71,7 +71,7 @@
         Lista de Clientes
       </div>
       <div class="card-body">
-        <div class="table-responsive">
+        <div class="table-responsive hg-table">
           <table class="table">
             <thead>
               <tr>

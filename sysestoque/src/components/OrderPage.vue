@@ -1,15 +1,14 @@
 <template>
-  <div class="products">
-    <h3>Pedidos</h3>
-    <div class="card">
-      <div class="card-header">
-        Crie seu pedido aqui:
+  <div class="orders">
+    <div class="card mb-3 mg-top">
+      <div class="card-header text-white bg-dark">
+        Cadastro de pedidos
       </div>
       <div class="card-body">
         <form class="form-inline" v-on:submit.prevent="onSubmit">
 
           <div class="form-group">
-            <select v-model="orderData.order_client" class="form-control ml-sm-2 mr-sm-4 my-2">
+            <select v-model="orderData.order_client" class="form-control ml-sm-2 mr-sm-4 my-2" required>
               <option value="">Escolha o cliente</option>
               <option v-for="client in clients" v-bind:value="client.id">
                 {{ client.name }}
@@ -18,7 +17,7 @@
           </div>
 
           <div class="form-group">
-            <select v-model="orderData.order_seller" class="form-control ml-sm-2 mr-sm-4 my-2">
+            <select v-model="orderData.order_seller" class="form-control ml-sm-2 mr-sm-4 my-2" required>
               <option value="">Escolha o vendedor</option>
               <option v-for="seller in sellers" v-bind:value="seller.id">
                 {{ seller.name }}
@@ -27,13 +26,13 @@
           </div>
           
           <div class="form-group">
-            <input v-model="orderData.order_total_quantity" type="number" placeholder="Quant. Total" class="form-control ml-sm-2 mr-sm-4 my-2 " >
+            <input v-model="orderData.order_total_quantity" type="number" placeholder="Quant. Total" class="form-control ml-sm-2 mr-sm-4 my-2 size_field " required>
           </div>
           <div class="form-group">
-            <input v-model="orderData.order_price" v-money="money" placeholder="Preço" class="form-control ml-sm-2 mr-sm-4 my-2 size_field">
+            <input v-model="orderData.order_price" v-money="money" placeholder="Preço" class="form-control ml-sm-2 mr-sm-4 my-2 size_field" required>
           </div>
           <div class="form-group">
-            <input v-model="orderData.order_date" placeholder="Data" onfocus="(this.type='date')" onblur="(this.type='text')" id="date" type="text" class="form-control ml-sm-2 mr-sm-4 my-2" >
+            <input v-model="orderData.order_date" placeholder="Data" onfocus="(this.type='date')" onblur="(this.type='text')" id="date" type="text" class="form-control ml-sm-2 mr-sm-4 my-2" required>
           </div>
 
         <table class="table">
@@ -47,7 +46,7 @@
         <tbody>
           <tr v-for="(row, index) in rows">
 
-              <td>
+              <td width="200px">
                 <select v-model="row.order_product" class="form-control ml-sm-2 mr-sm-4 my-2 size_field_row">
                   <option value="">Escolha o produto</option>
                   <option v-for="product in products" v-bind:value="product.id">
@@ -56,8 +55,8 @@
                 </select>
               </td>
             
-              <td><input v-model="row.order_total_quantity" type="number" placeholder="Quant." class="form-control ml-sm-2 mr-sm-4 my-2" ></td>
-              <td>
+              <td><input v-model="row.order_total_quantity" type="number" placeholder="Quant." class="form-control ml-sm-2 mr-sm-4 my-2 size_field" ></td>
+              <td class="pd-bt-remove">
                   <a v-on:click="removeElement(index);" class="btn-remove">Remove</a>
               </td>
           </tr>
@@ -65,7 +64,7 @@
         </table>
 
           <div class="ml-auto text-right">
-            <button type="submit" class="btn btn-primary my-2">Salvar</button>            
+            <button type="submit" class="btn btn-success my-2">Adicionar</button>            
           </div>
         </form>
         <div>
@@ -76,11 +75,11 @@
 
 
     <div class="card mt-5">
-      <div class="card-header">
+      <div class="card-header text-white bg-dark">
         Lista de Pedidos
       </div>
       <div class="card-body">
-        <div class="table-responsive">
+        <div class="table-responsive hg-table">
           <table class="table">
             <thead>
               <tr>
@@ -406,34 +405,24 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h3{
-  text-align: center;
-  margin-top: 30px;
-  margin-bottom: 20px;
-}
-.icon{
-  margin-right: 10px;
-}
-.icon i{
-  cursor: pointer;
-}
 
 .size_field{
-    width: 100px;
+    width: 150px;
 }
 
 .size_field_row{
     width: 450px;
 }
 
-td {
-  width: 30px;
-}
-
 .btn-remove{
   cursor: pointer;
-  padding: 4px;
+  padding: 8px;
   background-color: orange;
 }
+
+.pd-bt-remove{
+  padding: 30px;
+}
+
 
 </style>
