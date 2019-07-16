@@ -186,7 +186,7 @@
                        <i class="fa fa-eye"></i>
                     </router-link>
                     <a href="#" class="icon">
-                      <i v-on:click="onReportPdf(order)" class="fa fa-file-pdf-o"></i>
+                      <i v-on:click="onReportPdf(order.id)" class="fa fa-file-pdf-o"></i>
                     </a>
                   </td>
                 </template>
@@ -311,6 +311,14 @@ export default {
       }).catch(e => this.$notify.error('Não foi possível deletar!'))  
     },
 
+    reportAPIOrderToPDF(order_id){
+      apiService.reportPDFOrder(order_id).then((data) => {
+        const blob = new Blob([data], { type: 'application/pdf' })
+        const url = window.URL.createObjectURL(blob)
+        window.open(url)        
+      }).catch(e => this.$notify.error('Não foi possível abrir o PDF!'))
+    },
+
     // criacao de pedido
     onSubmit(){      
       const data = {
@@ -356,6 +364,10 @@ export default {
         }).catch(e => this.$notify.error('Não foi possível salvar!')) 
 
     },
+
+    onReportPdf(order_id){
+      this.reportAPIOrderToPDF(order_id)
+    },
       
     onDelete(order_id){
       this.deleteAPIOrder(order_id);  
@@ -389,8 +401,8 @@ export default {
           'value_total':  this.editOrderData.order_price.replace('R$',''),
           'date_order': this.editOrderData.order_date
         }
-      console.log(data)
-      console.log(id)  
+      // console.log(data)
+      // console.log(id)  
       apiService.updateOrder(id, data).then((data) => {
         this.$notify.success('Seu dado foi atualizado com sucesso!')
         this.editId = ''      

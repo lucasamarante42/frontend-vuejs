@@ -6,12 +6,15 @@
 	        Detalhes
 	      </div>
 	      <div class="card-body">
-            <div class="row" v-for="item in orderItens" v-bind:key="item.id">
-          
+          <div v-if="orderItens.length > 0">
+            <div class="row" v-for="item in orderItens" v-bind:key="item.id">          
                 <p>Produto: {{item.product_name}} - Quantidade: {{item.quantity}}</p>
                 <p></p> 
             </div>
-
+          </div>  
+          <div v-else>
+              <p>Não existem itens no pedido</p>
+          </div>
 	        <router-link :to="'/order'" class="btn btn-primary"> Voltar </router-link>
 	      </div>
 		</div>
@@ -39,8 +42,8 @@ export default {
   methods: {
 		getAPIOrderItenByOrder() {
 			apiService.getAPIOrderItenByOrderID(this.$route.params.id).then((data) => {
-                this.orderItens = data.results;						
-            })
+          this.orderItens = data.results;						
+      })
 		}
 	}
 }

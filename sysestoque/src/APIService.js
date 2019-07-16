@@ -139,4 +139,9 @@ getAPIOrderItenByOrderID(id) {
     return axios.get(url).then(response => response.data)
 }
 
+reportPDFOrder(id){
+    const url = `${API_URL}/api/v1/orders_to_pdf/${id}`
+    return axios.get(url, {responseType: 'blob'}).then(response => response.data)
+}
+
 }
