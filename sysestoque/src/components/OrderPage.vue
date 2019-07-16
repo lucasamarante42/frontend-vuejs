@@ -185,6 +185,9 @@
                      >
                        <i class="fa fa-eye"></i>
                     </router-link>
+                    <a href="#" class="icon">
+                      <i v-on:click="onReportPdf(order)" class="fa fa-file-pdf-o"></i>
+                    </a>
                   </td>
                 </template>
               </tr>
